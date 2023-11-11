@@ -5,7 +5,7 @@
 // Definindo o tipo de dado para o peso das arestas
 typedef int TIPOPESO;
 
-// Estrutura para representar a adjacÃªncia
+// Estrutura para representar a adjacência
 typedef struct adjacencia {
     int vertice;
     TIPOPESO peso;
@@ -13,7 +13,7 @@ typedef struct adjacencia {
     bool visitado;
 } ADJACENCIA;
 
-// Estrutura para representar um vÃ©rtice
+// Estrutura para representar um vértice
 typedef struct vertice {
     bool visitado;
     ADJACENCIA* cab;
@@ -26,7 +26,7 @@ typedef struct grafo {
     VERTICE* adj;
 } GRAFO;
 
-// Estrutura para representar um nÃ³ na fila
+// Estrutura para representar um nó na fila
 typedef struct noFila {
     int dado;
     struct noFila* prox;
@@ -38,7 +38,7 @@ typedef struct fila {
     NoFila* tras;
 } Fila;
 
-// FunÃ§Ã£o para criar um novo grafo
+// Função para criar um novo grafo
 GRAFO* criarGrafo(int vertices) {
     int i;
 	GRAFO* grafo = (GRAFO*)malloc(sizeof(GRAFO));
@@ -54,7 +54,7 @@ GRAFO* criarGrafo(int vertices) {
     return grafo;
 }
 
-// FunÃ§Ã£o para criar uma nova adjacÃªncia
+// Função para criar uma nova adjacência
 ADJACENCIA* criarAdjacencia(int vertice, TIPOPESO peso) {
     ADJACENCIA* novaAdjacencia = (ADJACENCIA*)malloc(sizeof(ADJACENCIA));
     novaAdjacencia->vertice = vertice;
@@ -64,13 +64,13 @@ ADJACENCIA* criarAdjacencia(int vertice, TIPOPESO peso) {
     return novaAdjacencia;
 }
 
-// FunÃ§Ã£o para adicionar uma aresta ao grafo
+// Função para adicionar uma aresta ao grafo
 void adicionarAresta(GRAFO* grafo, int origem, int destino, TIPOPESO peso) {
     ADJACENCIA* novaAdjacencia = criarAdjacencia(destino, peso);
     novaAdjacencia->prox = grafo->adj[origem].cab;
     grafo->adj[origem].cab = novaAdjacencia;
 
-    // Como o grafo Ã© nÃ£o direcionado, adicione uma aresta do destino para a origem tambÃ©m
+    // Como o grafo é não direcionado, adicione uma aresta do destino para a origem também
     novaAdjacencia = criarAdjacencia(origem, peso);
     novaAdjacencia->prox = grafo->adj[destino].cab;
     grafo->adj[destino].cab = novaAdjacencia;
@@ -78,7 +78,7 @@ void adicionarAresta(GRAFO* grafo, int origem, int destino, TIPOPESO peso) {
     grafo->arestas++;
 }
 
-// FunÃ§Ã£o para criar uma nova instÃ¢ncia da fila
+// Função para criar uma nova instância da fila
 Fila* criarFila() {
     Fila* novaFila = (Fila*)malloc(sizeof(Fila));
     novaFila->frente = NULL;
@@ -86,7 +86,7 @@ Fila* criarFila() {
     return novaFila;
 }
 
-// FunÃ§Ã£o para enfileirar um dado na fila
+// Função para enfileirar um dado na fila
 void enfileirar(Fila* fila, int dado) {
     NoFila* novoNo = (NoFila*)malloc(sizeof(NoFila));
     novoNo->dado = dado;
@@ -101,7 +101,7 @@ void enfileirar(Fila* fila, int dado) {
     }
 }
 
-// FunÃ§Ã£o para desenfileirar um dado da fila
+// Função para desenfileirar um dado da fila
 int desenfileirar(Fila* fila) {
     if (fila->frente == NULL) {
         return -1; // Fila vazia
@@ -120,20 +120,20 @@ int desenfileirar(Fila* fila) {
     return dado;
 }
 
-// FunÃ§Ã£o para verificar se a fila estÃ¡ vazia
+// Função para verificar se a fila está vazia
 bool filaVazia(Fila* fila) {
     return (fila->frente == NULL);
 }
 
-// FunÃ§Ã£o para realizar a busca em profundidade (DFS)
+// Função para realizar a busca em profundidade (DFS)
 void BuscaEmProfundidade(GRAFO* grafo, int vertice) {
-    // Marca o vÃ©rtice como visitado
+    // Marca o vértice como visitado
     grafo->adj[vertice].visitado = true;
 
-    // Imprime o vÃ©rtice visitado
-    printf("Visitando vÃ©rtice: %d\n", vertice);
+    // Imprime o vértice visitado
+    printf("Visitando vértice: %d\n", vertice);
 
-    // Explora os vÃ©rtices adjacentes nÃ£o visitados de maneira recursiva
+    // Explora os vértices adjacentes não visitados de maneira recursiva
     ADJACENCIA* temp = grafo->adj[vertice].cab;
     while (temp) {
         int verticeAdjacente = temp->vertice;
@@ -148,9 +148,9 @@ void BuscaEmProfundidade(GRAFO* grafo, int vertice) {
 void BuscaEmLargura(GRAFO* grafo, int verticeInicial) {
     Fila* fila = criarFila();
 
-    printf("Busca em Largura a partir do vÃ©rtice %d:\n", verticeInicial);
+    printf("Busca em Largura a partir do vértice %d:\n", verticeInicial);
 
-    // Marca o vÃ©rtice inicial como visitado e o enfileira
+    // Marca o vértice inicial como visitado e o enfileira
     grafo->adj[verticeInicial].visitado = true;
     enfileirar(fila, verticeInicial);
 
@@ -164,7 +164,7 @@ void BuscaEmLargura(GRAFO* grafo, int verticeInicial) {
         printf("\n");
 
         int verticeAtual = desenfileirar(fila);
-        printf("Visitando vÃ©rtice: %d\n", verticeAtual);
+        printf("Visitando vértice: %d\n", verticeAtual);
 
         ADJACENCIA* temp = grafo->adj[verticeAtual].cab;
         while (temp) {
@@ -181,12 +181,12 @@ void BuscaEmLargura(GRAFO* grafo, int verticeInicial) {
     printf("\n");
 }
 
-// FunÃ§Ã£o para imprimir o grafo
+// Função para imprimir o grafo
 void imprimirGrafo(GRAFO* grafo) {
     int i;
 	for (i = 0; i < grafo->vertices; ++i) {
         ADJACENCIA* temp = grafo->adj[i].cab;
-        printf("VÃ©rtice %d: ", i);
+        printf("Vértice %d: ", i);
         while (temp) {
             printf("(%d, %d) ", temp->vertice, temp->peso);
             temp = temp->prox;
@@ -215,7 +215,7 @@ int main() {
     adicionarAresta(grafo1, 9, 13, 0);
     adicionarAresta(grafo1, 9, 14, 0);
 
-    printf("RepresentaÃ§Ã£o do Grafo:\n");
+    printf("Representação do Grafo:\n");
     imprimirGrafo(grafo1);
 
     BuscaEmLargura(grafo1, 1);
@@ -239,7 +239,7 @@ int main() {
     adicionarAresta(grafo2, 9, 13, 0);
     adicionarAresta(grafo2, 9, 14, 0);
 
-    printf("RepresentaÃ§Ã£o do Grafo:\n");
+    printf("Representação do Grafo:\n");
     imprimirGrafo(grafo2);
 
     
@@ -247,3 +247,4 @@ int main() {
 
     return 0;
 }
+
